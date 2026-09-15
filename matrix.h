@@ -33,7 +33,7 @@ namespace miit::algebra {
          * @param cols количество столбцов
          * @note элементы инициализируются значением по умолчанию (T())
          */
-        Matrix(size_t rows, size_t cols);
+        Matrix(const size_t rows,const size_t cols);
 
         Matrix(const Matrix& other) = default;
         Matrix(Matrix&& other) noexcept = default;
