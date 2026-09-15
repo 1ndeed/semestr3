@@ -16,7 +16,7 @@ namespace miit::algebra {
          * @brief Конструктор
          * @param value константное значение
          */
-        ConstantGenerator(int value = 0);
+        ConstantGenerator(const int value = 0);
 
         /**
          * @brief Возвращает константное значение
@@ -28,7 +28,7 @@ namespace miit::algebra {
          * @brief Устанавливает новое константное значение
          * @param value новое значение
          */
-        void setValue(int value);
+        void setValue(const int value);
 
         /**
          * @brief Возвращает текущее константное значение
