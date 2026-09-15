@@ -35,7 +35,7 @@ namespace miit::algebra {
     // Приватные методы
     // ============================================================
 
-    size_t Task1::findMinAbsInColumn(size_t col) const {
+    size_t Task1::findMinAbsInColumn(const size_t col) const {
         checkMatrixNotEmpty();
 
         size_t rows = matrix.getRows();
