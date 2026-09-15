@@ -18,42 +18,10 @@ enum class FillMethod {
     Constant = 3
 };
 
-size_t getSize(const std::string& message) {
-    std::cout << message;
-    int value;
-    std::cin >> value;
-    if (value <= 0) {
-        std::cerr << "Error: size must be positive\n";
-        exit(1);
-    }
-    return static_cast<size_t>(value);
-}
-
-FillMethod getChoice() {
-    std::cout << "Select array filling method:\n"
-        << static_cast<int>(FillMethod::Random) << " - random numbers\n"
-        << static_cast<int>(FillMethod::Manual) << " - manual input\n"
-        << static_cast<int>(FillMethod::Constant) << " - constant value (preset in code)\n"
-        << "Your choice: ";
-    int choice;
-    std::cin >> choice;
-    return static_cast<FillMethod>(choice);
-}
-
+size_t getSize(const std::string& message); 
+FillMethod getChoice();
 void demonstrateExercise(Exercise& exercise, const Matrix<int>& original,
-    const std::string& taskName) {
-    std::cout << "\n=== " << taskName << " ===\n";
-    std::cout << "Description: " << exercise.getDescription() << "\n\n";
-
-    std::cout << "Original matrix:\n";
-    std::cout << original.toString() << "\n";
-
-    exercise.setMatrix(original);
-    exercise.solve();
-
-    std::cout << "Result:\n";
-    std::cout << exercise.getMatrix().toString() << "\n";
-}
+    const std::string& taskName); 
 
 int main() {
     try {
@@ -136,4 +104,38 @@ int main() {
     std::cin.get();
 
     return 0;
+}
+size_t getSize(const std::string& message) {
+    std::cout << message;
+    int value=0;
+    std::cin >> value;
+    if (value <= 0) {
+        std::cerr << "Error: size must be positive\n";
+        exit(1);
+    }
+    return static_cast<size_t>(value);
+}
+FillMethod getChoice() {
+    std::cout << "Select array filling method:\n"
+        << static_cast<int>(FillMethod::Random) << " - random numbers\n"
+        << static_cast<int>(FillMethod::Manual) << " - manual input\n"
+        << static_cast<int>(FillMethod::Constant) << " - constant value (preset in code)\n"
+        << "Your choice: ";
+    int choice;
+    std::cin >> choice;
+    return static_cast<FillMethod>(choice);
+}
+void demonstrateExercise(Exercise& exercise, const Matrix<int>& original,
+    const std::string& taskName) {
+    std::cout << "\n=== " << taskName << " ===\n";
+    std::cout << "Description: " << exercise.getDescription() << "\n\n";
+
+    std::cout << "Original matrix:\n";
+    std::cout << original.toString() << "\n";
+
+    exercise.setMatrix(original);
+    exercise.solve();
+
+    std::cout << "Result:\n";
+    std::cout << exercise.getMatrix().toString() << "\n";
 }
