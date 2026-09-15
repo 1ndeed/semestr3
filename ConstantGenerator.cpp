@@ -8,12 +8,5 @@ namespace miit::algebra {
         return constantValue;
     }
 
-    void ConstantGenerator::setValue(const int value) {
-        constantValue = value;
-    }
-
-    int ConstantGenerator::getValue() const {
-        return constantValue;
-    }
-
 } // namespace miit::algebra
+
