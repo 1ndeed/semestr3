@@ -7,21 +7,39 @@
 namespace miit::algebra {
 
     /**
-     * @brief Абстрактный интерфейс матрицы (двумерного массива)
+     * @brief Универсальный класс матрицы (двумерного массива)
      * @tparam T Тип элементов матрицы
      *
-     * Этот заголовочный файл не имеет зависимостей от остальной части
-     * решения (никаких классов задач, генераторов и т.п.) и может быть
-     * без изменений скопирован в любой другой проект: достаточно
-     * реализовать чисто виртуальные методы в собственном классе-наследнике.
+     * Этот заголовочный файл (вместе с matrix.cpp) не имеет зависимостей
+     * от остальной части решения (никаких классов задач, генераторов
+     * и т.п.) и может быть без изменений скопирован в любой другой проект.
      */
     template <typename T>
     class Matrix {
+    private:
+        size_t rows;
+        size_t cols;
+        std::vector<std::vector<T>> data;
+
     public:
         /**
-         * @brief Виртуальный деструктор
+         * @brief Конструктор по умолчанию. Создаёт пустую матрицу размером 0x0
          */
-        virtual ~Matrix() = default;
+        Matrix();
+
+        /**
+         * @brief Конструктор с заданным размером
+         * @param rows количество строк
+         * @param cols количество столбцов
+         * @note элементы инициализируются значением по умолчанию (T())
+         */
+        Matrix(size_t rows, size_t cols);
+
+        Matrix(const Matrix& other) = default;
+        Matrix(Matrix&& other) noexcept = default;
+        Matrix& operator=(const Matrix& other) = default;
+        Matrix& operator=(Matrix&& other) noexcept = default;
+        ~Matrix() = default;
 
         // ============================================================
         // Методы доступа к информации о матрице
@@ -31,19 +49,19 @@ namespace miit::algebra {
          * @brief Получить количество строк в матрице
          * @return Количество строк
          */
-        virtual size_t getRows() const = 0;
+        size_t getRows() const;
 
         /**
          * @brief Получить количество столбцов в матрице
          * @return Количество столбцов
          */
-        virtual size_t getCols() const = 0;
+        size_t getCols() const;
 
         /**
          * @brief Проверить, пустая ли матрица
          * @return true если матрица пустая, иначе false
          */
-        virtual bool isEmpty() const = 0;
+        bool isEmpty() const;
 
         // ============================================================
         // Методы доступа к элементам
@@ -55,7 +73,7 @@ namespace miit::algebra {
          * @return Ссылка на вектор строки
          * @throws std::out_of_range если индекс вне допустимого диапазона
          */
-        virtual std::vector<T>& operator[](const size_t index) = 0;
+        std::vector<T>& operator[](const size_t index);
 
         /**
          * @brief Доступ к строке матрицы по индексу (константный)
@@ -63,7 +81,7 @@ namespace miit::algebra {
          * @return Константная ссылка на вектор строки
          * @throws std::out_of_range если индекс вне допустимого диапазона
          */
-        virtual const std::vector<T>& operator[](const size_t index) const = 0;
+        const std::vector<T>& operator[](const size_t index) const;
 
         // ============================================================
         // Методы изменения размера
@@ -76,12 +94,12 @@ namespace miit::algebra {
          * @note При увеличении размера новые элементы инициализируются значением по умолчанию
          * @note При уменьшении размера лишние элементы отбрасываются
          */
-        virtual void resize(const size_t newRows, const size_t newCols) = 0;
+        void resize(const size_t newRows, const size_t newCols);
 
         /**
          * @brief Очистить матрицу (установить размер 0x0)
          */
-        virtual void clear() = 0;
+        void clear();
 
         // ============================================================
         // Методы заполнения
@@ -91,7 +109,7 @@ namespace miit::algebra {
          * @brief Заполнить всю матрицу заданным значением
          * @param value Значение для заполнения
          */
-        virtual void fill(const T& value) = 0;
+        void fill(const T& value);
 
         // ============================================================
         // Методы вывода
@@ -101,7 +119,7 @@ namespace miit::algebra {
          * @brief Преобразовать матрицу в строку
          * @return Строковое представление матрицы
          */
-        virtual std::string toString() const = 0;
+        std::string toString() const;
 
         // ============================================================
         // Методы копирования
@@ -111,7 +129,7 @@ namespace miit::algebra {
          * @brief Создать копию матрицы
          * @return Умный указатель на копию матрицы
          */
-        virtual std::unique_ptr<Matrix<T>> clone() const = 0;
+        std::unique_ptr<Matrix<T>> clone() const;
     };
 
 } // namespace miit::algebra
