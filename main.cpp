@@ -31,9 +31,9 @@ size_t getSize(const std::string& message) {
 
 FillMethod getChoice() {
     std::cout << "Select array filling method:\n"
-        << "1 - random numbers\n"
-        << "2 - manual input\n"
-        << "3 - constant value (preset in code)\n"
+        << static_cast<int>(FillMethod::Random) << " - random numbers\n"
+        << static_cast<int>(FillMethod::Manual) << " - manual input\n"
+        << static_cast<int>(FillMethod::Constant) << " - constant value (preset in code)\n"
         << "Your choice: ";
     int choice;
     std::cin >> choice;
