@@ -55,7 +55,7 @@ namespace miit::algebra {
          * @return Ссылка на вектор строки
          * @throws std::out_of_range если индекс вне допустимого диапазона
          */
-        virtual std::vector<T>& operator[](size_t index) = 0;
+        virtual std::vector<T>& operator[](const size_t index) = 0;
 
         /**
          * @brief Доступ к строке матрицы по индексу (константный)
@@ -63,25 +63,7 @@ namespace miit::algebra {
          * @return Константная ссылка на вектор строки
          * @throws std::out_of_range если индекс вне допустимого диапазона
          */
-        virtual const std::vector<T>& operator[](size_t index) const = 0;
-
-        /**
-         * @brief Получить элемент матрицы по индексам (неконстантный)
-         * @param row Индекс строки
-         * @param col Индекс столбца
-         * @return Ссылка на элемент
-         * @throws std::out_of_range если индексы вне допустимого диапазона
-         */
-        virtual T& at(size_t row, size_t col) = 0;
-
-        /**
-         * @brief Получить элемент матрицы по индексам (константный)
-         * @param row Индекс строки
-         * @param col Индекс столбца
-         * @return Константная ссылка на элемент
-         * @throws std::out_of_range если индексы вне допустимого диапазона
-         */
-        virtual const T& at(size_t row, size_t col) const = 0;
+        virtual const std::vector<T>& operator[](const size_t index) const = 0;
 
         // ============================================================
         // Методы изменения размера
@@ -94,7 +76,7 @@ namespace miit::algebra {
          * @note При увеличении размера новые элементы инициализируются значением по умолчанию
          * @note При уменьшении размера лишние элементы отбрасываются
          */
-        virtual void resize(size_t newRows, size_t newCols) = 0;
+        virtual void resize(const size_t newRows, const size_t newCols) = 0;
 
         /**
          * @brief Очистить матрицу (установить размер 0x0)
