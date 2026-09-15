@@ -51,7 +51,7 @@ namespace miit::algebra {
          * @throws std::runtime_error если матрица пустая
          * @throws std::out_of_range если индекс столбца вне диапазона
          */
-        size_t findMinAbsInColumn(size_t col) const;
+        size_t findMinAbsInColumn(const size_t col) const;
 
         /**
          * @brief Проверить, что матрица не пустая
