@@ -8,7 +8,7 @@ namespace miit::algebra {
     Matrix<T>::Matrix() : rows(0), cols(0) {}
 
     template <typename T>
-    Matrix<T>::Matrix(size_t rows, size_t cols) : rows(rows), cols(cols) {
+    Matrix<T>::Matrix(const size_t rows,const size_t cols) : rows(rows), cols(cols) {
         data.resize(rows, std::vector<T>(cols, T()));
     }
 
