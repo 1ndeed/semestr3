@@ -2,13 +2,13 @@
 
 namespace miit::algebra {
 
-    ConstantGenerator::ConstantGenerator(int value) : constantValue(value) {}
+    ConstantGenerator::ConstantGenerator(const int value) : constantValue(value) {}
 
     int ConstantGenerator::generate() {
         return constantValue;
     }
 
-    void ConstantGenerator::setValue(int value) {
+    void ConstantGenerator::setValue(const int value) {
         constantValue = value;
     }
 
