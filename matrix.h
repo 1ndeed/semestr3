@@ -17,9 +17,20 @@ namespace miit::algebra {
     template <typename T>
     class Matrix {
     private:
-        size_t rows;
-        size_t cols;
-        std::vector<std::vector<T>> data;
+    /**
+     * @brief Количество строк в матрице
+     */
+    size_t rows;
+
+    /**
+     * @brief Количество столбцов в матрице
+     */
+    size_t cols;
+
+    /**
+     * @brief Данные матрицы — вектор строк, каждая строка - вектор из cols элементов
+     */
+    std::vector<std::vector<T>> data;
 
     public:
         /**
@@ -34,11 +45,35 @@ namespace miit::algebra {
          * @note элементы инициализируются значением по умолчанию (T())
          */
         Matrix(const size_t rows,const size_t cols);
-
+        /**
+         * @brief Конструктор копирования
+         * @param other матрица, которую нужно скопировать
+         */
         Matrix(const Matrix& other) = default;
+        
+        /**
+         * @brief Конструктор перемещения
+         * @param other матрица, содержимое которой перемещается
+         */
         Matrix(Matrix&& other) noexcept = default;
+        
+        /**
+         * @brief Оператор копирующего присваивания
+         * @param other матрица, которую нужно скопировать
+         * @return ссылка на текущий объект
+         */
         Matrix& operator=(const Matrix& other) = default;
+        
+        /**
+         * @brief Оператор перемещающего присваивания
+         * @param other матрица, содержимое которой перемещается
+         * @return ссылка на текущий объект
+         */
         Matrix& operator=(Matrix&& other) noexcept = default;
+        
+        /**
+         * @brief Деструктор по умолчанию
+         */
         ~Matrix() = default;
 
         // ============================================================
