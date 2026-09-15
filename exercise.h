@@ -26,7 +26,7 @@ namespace miit::algebra {
         /**
          * @brief Устанавливает генератор
          */
-        void setGenerator(std::unique_ptr<Generator> gen);
+        void setGenerator(const std::unique_ptr<Generator> gen);
 
         /**
          * @brief Получает текущую матрицу
