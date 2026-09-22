@@ -34,6 +34,33 @@
 
 namespace {
 
+    /**
+     * @brief Пункты главного меню. Значения соответствуют тому, что
+     *        пользователь вводит с клавиатуры. PrintMenu() выводит эти
+     *        же числа на экран через приведение значений enum к int
+     *        (см. static_cast<int>(...) в реализации), а не отдельными
+     *        захардкоженными цифрами в строке - так текст меню и код
+     *        обработки выбора не могут разойтись между собой.
+     */
+    enum class MainMenuChoice {
+        Exit = 0,                     ///< "0 - Выход"
+        ShowMedicines = 1,             ///< "1 - Данные о лекарствах" (задание 1)
+        ShowSalesReport = 2,           ///< "2 - Продажи..." (задание 2)
+        ShowMedicinesForDisease = 3,   ///< "3 - Лекарства для болезни" (задание 3)
+    };
+
+    /**
+     * @brief Пункты подменю выбора отчётного периода (см. AskPeriod()).
+     *        Как и MainMenuChoice, значения используются и в switch, и
+     *        при печати текста подсказки - одно и то же enum-значение,
+     *        а не два независимых магических числа.
+     */
+    enum class PeriodMenuChoice {
+        Week = 1,   ///< "1 - неделя"
+        Month = 2,  ///< "2 - месяц"
+        Year = 3,   ///< "3 - год"
+    };
+
 #ifdef _WIN32
     /**
      * @brief Переключает кодовые страницы ввода/вывода консоли Windows
@@ -143,9 +170,10 @@ int main() {
 #endif
 
     // Требование задания 1: коллекция объектов БАЗОВОГО типа,
-    // заполненная объектами типов-наследников.
-    std::vector<std::shared_ptr<Medicine>> medicines = CreateDemoMedicines();
-    Pharmacy pharmacy = CreateDemoPharmacy(medicines);
+    // заполненная объектами типов-наследников. Ни medicines, ни
+    // pharmacy не переприсваиваются ниже по функции - обе константы.
+    const std::vector<std::shared_ptr<Medicine>> medicines = CreateDemoMedicines();
+    const Pharmacy pharmacy = CreateDemoPharmacy(medicines);
 
     std::cout << "=== " << pharmacy.GetName() << " ===\n";
 
@@ -162,17 +190,17 @@ int main() {
         }
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-        switch (choice) {
-        case 1:
+        switch (static_cast<MainMenuChoice>(choice)) {
+        case MainMenuChoice::ShowMedicines:
             PrintAllMedicinesPolymorphically(medicines);
             break;
-        case 2:
+        case MainMenuChoice::ShowSalesReport:
             ShowSalesReport(pharmacy);
             break;
-        case 3:
+        case MainMenuChoice::ShowMedicinesForDisease:
             ShowMedicinesForDisease(pharmacy);
             break;
-        case 0:
+        case MainMenuChoice::Exit:
             running = false;
             break;
         default:
@@ -203,7 +231,7 @@ namespace {
     }
 
     Date Today() {
-        return Date(2026, 9, 16);
+        return Date(2026, 9, 22);
     }
 
     std::vector<std::shared_ptr<Medicine>> CreateDemoMedicines() {
@@ -296,13 +324,16 @@ namespace {
     }
 
     SalesPeriod AskPeriod() {
-        std::cout << "Выберите период (1 - неделя, 2 - месяц, 3 - год): ";
+        std::cout << "Выберите период ("
+            << static_cast<int>(PeriodMenuChoice::Week) << " - неделя, "
+            << static_cast<int>(PeriodMenuChoice::Month) << " - месяц, "
+            << static_cast<int>(PeriodMenuChoice::Year) << " - год): ";
         int choice = 0;
         std::cin >> choice;
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        switch (choice) {
-        case 2: return SalesPeriod::Month;
-        case 3: return SalesPeriod::Year;
+        switch (static_cast<PeriodMenuChoice>(choice)) {
+        case PeriodMenuChoice::Month: return SalesPeriod::Month;
+        case PeriodMenuChoice::Year:  return SalesPeriod::Year;
         default: return SalesPeriod::Week;
         }
     }
@@ -326,10 +357,10 @@ namespace {
             return;
         }
 
-        SalesPeriod period = AskPeriod();
-        Date today = Today();
+        const SalesPeriod period = AskPeriod();
+        const Date today = Today();
 
-        auto sales = pharmacy.GetSalesForPeriod(name, period, today);
+        const auto sales = pharmacy.GetSalesForPeriod(name, period, today);
         PrintDivider();
         std::cout << "Продажи \"" << name << "\" за " << PeriodName(period)
             << " (по состоянию на " << today.ToString() << "):\n";
@@ -351,7 +382,7 @@ namespace {
         std::string disease;
         std::getline(std::cin, disease);
 
-        auto found = pharmacy.GetMedicinesForDisease(disease);
+        const auto found = pharmacy.GetMedicinesForDisease(disease);
         PrintDivider();
         std::cout << "Лекарства, применяемые при \"" << disease << "\":\n";
         if (found.empty()) {
@@ -366,10 +397,13 @@ namespace {
 
     void PrintMenu() {
         PrintDivider();
-        std::cout << "1 - Данные о лекарствах (Задание 1)\n";
-        std::cout << "2 - Продажи по лекарству за неделю/месяц/год (Задание 2)\n";
-        std::cout << "3 - Лекарства для выбранной болезни (Задание 3)\n";
-        std::cout << "0 - Выход\n";
+        std::cout << static_cast<int>(MainMenuChoice::ShowMedicines)
+            << " - Данные о лекарствах (Задание 1)\n";
+        std::cout << static_cast<int>(MainMenuChoice::ShowSalesReport)
+            << " - Продажи по лекарству за неделю/месяц/год (Задание 2)\n";
+        std::cout << static_cast<int>(MainMenuChoice::ShowMedicinesForDisease)
+            << " - Лекарства для выбранной болезни (Задание 3)\n";
+        std::cout << static_cast<int>(MainMenuChoice::Exit) << " - Выход\n";
         std::cout << "Ваш выбор: ";
     }
 
