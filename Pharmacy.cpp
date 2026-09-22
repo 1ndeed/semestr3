@@ -39,7 +39,7 @@ int Pharmacy::PeriodLengthDays(SalesPeriod period) {
 bool Pharmacy::IsWithinPeriod(const Date& saleDate, const Date& asOf, SalesPeriod period) const {
     // Продажа учитывается, если она произошла не позже asOf и не
     // раньше, чем (asOf - длина периода) дней.
-    long daysAgo = saleDate.DaysUntil(asOf); // asOf - saleDate
+    const long daysAgo = saleDate.DaysUntil(asOf); // asOf - saleDate
     return daysAgo >= 0 && daysAgo <= PeriodLengthDays(period);
 }
 
