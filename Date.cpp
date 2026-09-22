@@ -70,9 +70,9 @@ Date Date::Parse(const std::string& isoDate) {
             throw std::invalid_argument("Date::Parse: ожидается формат ГГГГ-ММ-ДД");
         }
     }
-    int year = std::atoi(isoDate.substr(0, 4).c_str());
-    int month = std::atoi(isoDate.substr(5, 2).c_str());
-    int day = std::atoi(isoDate.substr(8, 2).c_str());
+    const int year = std::atoi(isoDate.substr(0, 4).c_str());
+    const int month = std::atoi(isoDate.substr(5, 2).c_str());
+    const int day = std::atoi(isoDate.substr(8, 2).c_str());
     return Date(year, month, day);
 }
 
