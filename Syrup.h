@@ -41,5 +41,5 @@ protected:
     std::string GetSpecificInfo() const override;
 
 private:
-    double volumeMl_;
+    double volumeMl_ = 0.0; // инициализатор по умолчанию - защита от забытого поля в будущем конструкторе
 };
