@@ -28,7 +28,7 @@ public:
      * @brief Создаёт пустую аптеку с заданным отображаемым названием.
      * @param name Человекочитаемое название аптеки.
      */
-    explicit Pharmacy(std::string name);
+    explicit Pharmacy(const std::string name);
 
     /** @brief Возвращает отображаемое название аптеки. */
     const std::string& GetName() const;
