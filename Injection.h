@@ -50,6 +50,7 @@ protected:
     std::string GetSpecificInfo() const override;
 
 private:
-    double ampouleVolumeMl_;
-    int ampoulesPerPack_;
+    // Инициализаторы по умолчанию - защита от забытого поля в будущем конструкторе.
+    double ampouleVolumeMl_ = 0.0;
+    int ampoulesPerPack_ = 0;
 };
