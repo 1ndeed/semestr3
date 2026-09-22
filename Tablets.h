@@ -47,6 +47,7 @@ protected:
     std::string GetSpecificInfo() const override;
 
 private:
-    double dosageMg_;
-    int tabletsPerPack_;
+    // Инициализаторы по умолчанию - защита от забытого поля в будущем конструкторе.
+    double dosageMg_ = 0.0;
+    int tabletsPerPack_ = 0;
 };
