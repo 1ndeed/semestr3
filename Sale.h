@@ -47,6 +47,7 @@ public:
 private:
     std::string medicineName_;
     Date saleDate_;
-    int quantity_;
-    double totalPrice_;
+    // Инициализаторы по умолчанию - защита от забытого поля в будущем конструкторе.
+    int quantity_ = 0;
+    double totalPrice_ = 0.0;
 };
