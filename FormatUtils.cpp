@@ -59,7 +59,7 @@ namespace {
 
         size_t pos = 0;
         while (pos < s.size()) {
-            unsigned char byte = static_cast<unsigned char>(s[pos]);
+            const unsigned char byte = static_cast<unsigned char>(s[pos]);
 
             if (byte < 0x80) {
                 // Латинская буква, цифра, пробел, знак препинания...
@@ -68,7 +68,7 @@ namespace {
                 continue;
             }
 
-            if (const std::string* lower = FindCyrillicLowerCase(s, pos)) {
+            if (const std::string* const lower = FindCyrillicLowerCase(s, pos)) {
                 result += *lower;
                 pos += lower->size();
             }
@@ -88,19 +88,19 @@ namespace {
 namespace FormatUtils {
 
     std::string FormatDecimal(double value) {
-        bool negative = value < 0.0;
-        if (negative) {
-            value = -value;
-        }
-        long long hundredths = static_cast<long long>(std::floor(value * 100.0 + 0.5));
-        long long whole = hundredths / 100;
-        long long frac = hundredths % 100;
+        // Ни одна из переменных ниже не меняется после инициализации:
+        // вместо того чтобы переприсваивать value/result по ходу дела,
+        // сразу считаем итоговые составляющие как константы.
+        const bool negative = value < 0.0;
+        const double absValue = negative ? -value : value;
 
-        std::string result = std::to_string(whole) + "." +
+        const long long hundredths = static_cast<long long>(std::floor(absValue * 100.0 + 0.5));
+        const long long whole = hundredths / 100;
+        const long long frac = hundredths % 100;
+
+        const std::string sign = (negative && hundredths != 0) ? "-" : "";
+        const std::string result = sign + std::to_string(whole) + "." +
             (frac < 10 ? "0" : "") + std::to_string(frac);
-        if (negative && hundredths != 0) {
-            result = "-" + result;
-        }
         return result;
     }
 
