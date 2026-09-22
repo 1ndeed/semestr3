@@ -21,7 +21,7 @@ public:
      * @param quantity     Количество проданных единиц.
      * @param totalPrice   Общая сумма, уплаченная за эту продажу (все единицы).
      */
-    Sale(std::string medicineName, Date saleDate, int quantity, double totalPrice);
+    Sale(const std::string medicineName, const Date saleDate, const int quantity, const double totalPrice);
 
     /** @brief Возвращает название проданного лекарства. */
     const std::string& GetMedicineName() const;
