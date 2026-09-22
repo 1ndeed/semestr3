@@ -112,7 +112,7 @@ private:
     std::string name_;
     Date expirationDate_;
     std::string annotation_;
-    double price_;
+    double price_ = 0.0; // инициализатор по умолчанию - защита от забытого поля в будущем конструкторе
     std::string manufacturer_;
     std::vector<std::string> diseases_;
 };
